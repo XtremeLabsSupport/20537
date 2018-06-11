@@ -1,0 +1,36 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "azureRegion": {
+      "value": "local"
+    },
+    "Username": {
+      "value": "YOUR_USERNAME_HERE_IN_LOWER_CASE"
+    },
+    "vmName": {
+      "value": "SCOM01"
+    },
+    "vmLocalAdminName": {
+      "value": "DemoAdmin"
+    },
+    "vmLocalAdminPassword": {
+      "value": "Password12345"
+    },
+    "domainName": {
+      "value": "ad.contoso.com"
+    },
+    "domainUserName": {
+      "value": "DemoAdmin"
+    },
+    "domainUserPassword": {
+      "value": "Password12345"
+    },
+    "scomManagementGroupName": {
+      "value": "ContosoAS"
+    },
+    "_artifactsLocation": {
+      "value": "https://samslmedia.blob.local.azurestack.external"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+This is a placeholder for the Win32OpenSSL_Light-1_1_0g.exe file that should be made available in this folder for Lab 5. Download the Win32OpenSSL_Light-1_1_0g.exe file from http://slproweb.com/products/Win32OpenSSL.html and place in this folder.

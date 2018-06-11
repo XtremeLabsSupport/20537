@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "AzureRegion": {
+      "defaultValue": "local",
+      "type": "string",
+      "allowedValues": [
+        "local"
+      ]
+    },
+
+    "vNetAddressSpace": {
+      "defaultValue": "10.0.0.0/16",
+      "type": "string",
+      "metadata": {
+        "description": "What is the address space of the Virtual Network?"
+      }
+    },
+
+    "vNetDnsServers": {
+      "defaultValue": [
+        "8.8.8.8",
+        "8.8.4.4"
+      ],
+      "type": "array",
+      "metadata": {
+        "description": "Example array: [\"8.8.8.8\", \"8.8.4.4\" ]"
+      }
+    },
+
+    "DeploymentDate": {
+      "type": "string",
+      "metadata": {
+        "description": "Deployment date"
+      }
+    },
+
+    "EnvironmentName": {
+      "defaultValue": "Development",
+      "type": "string",
+      "allowedValues": [
+        "Development",
+        "QA",
+        "Production"
+      ],
+      "metadata": {
+        "description": "What environment are you deploying to?"
+      }
+    }
+  },
+  "variables": {
+    "subnetArray": [
+      {
+        "name": "ActiveDirectory",
+        "properties": {
+          "addressPrefix": "10.0.1.0/24"
+        }
+      },
+      {
+        "name": "GatewaySubnet",
+        "properties": {
+          "addressPrefix": "10.0.0.0/24"
+        }
+      }
+    ],
+    "tagArray": {
+      "EnvironmentName": "[parameters('EnvironmentName')]",
+      "DeploymentDate": "[parameters('DeploymentDate')]"
+    },
+    "vnet": "[concat('VN-',parameters('AzureRegion'))]",
+    "vNetAddress": "[parameters('vNetAddressSpace')]",
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "comments": "Main virtual network",
+      "name": "[variables('vnet')]",
+      "apiVersion": "2015-06-15",
+      "location": "[variables('AzureRegion')]",
+      "tags": "[variables('tagArray')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vNetAddress')]"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": "[parameters('vNetDnsServers')]"
+        },
+        "subnets": "[variables('subnetArray')]"
+      }
+    }
+  ]
+}

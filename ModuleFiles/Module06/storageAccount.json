@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "savmstorageType": {
+          "type": "string",
+          "defaultValue": "Standard_LRS",
+          "allowedValues": [
+            "Standard_LRS"
+          ],
+          "metadata": {
+            "description": "The type of the Storage Account to be created."
+          }
+        },
+        "saname": {
+          "type": "string",
+          "metadata": {
+            "description": "The name of the Storage Account to be created."
+          }
+        }
+      },
+  "variables": {
+      "savmstorageName": "[concat(parameters('saname'), uniqueString(resourceGroup().id))]"},
+  "resources": [
+      {
+          "name": "[variables('savmstorageName')]",
+          "type": "Microsoft.Storage/storageAccounts",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-06-15",
+          "dependsOn": [ ],
+          "tags": {
+              "displayName": "parameters('saname')"
+          },
+          "properties": {
+              "accountType": "[parameters('savmstorageType')]"
+          }
+      }],
+  "outputs": {}
+}
